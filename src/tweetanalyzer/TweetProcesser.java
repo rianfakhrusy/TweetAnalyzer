@@ -41,6 +41,14 @@ public class TweetProcesser {
         //tokenize
         for (String sentence : strings) {
             String tokens[] = tokenizer.tokenize(sentence);
+            
+            //remove duplicate words in sentences
+            ArrayList<String> tokensList = new ArrayList<>();
+            Collections.addAll(tokensList, tokens);
+            Stream<String> tokensStream = tokensList.stream().map(s -> s.toUpperCase())
+                  .distinct();
+            String[] tokensArray = tokensStream.toArray(String[]::new);
+            
             for (String token : tokens) {
                 token = token.toLowerCase();
                 if (freqs.containsKey(token)) {
